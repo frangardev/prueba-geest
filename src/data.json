@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Ana García",
+    "email": "ana@empresa.com",
+    "phone": "555-0101",
+    "department": "Desarrollo"
+  },
+  {
+    "id": "2",
+    "name": "Carlos López",
+    "email": "carlos@empresa.com",
+    "phone": "555-0102",
+    "department": "Ventas"
+  }
+]
