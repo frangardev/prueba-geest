@@ -1,355 +1,163 @@
-import { useState } from 'react';
-import { Button, Input, Select, Chip } from './components/ui';
+import { useState, useEffect, useMemo } from 'react';
+import initialContactsData from './data.json';
+import { Contact, FilterDepartment } from './types';
+import { Button } from './components/ui';
+import { ContactFilters } from './components/ContactFilters';
+import { ContactList } from './components/ContactList';
+import { ContactSkeleton } from './components/ContactSkeleton';
+import { AddContactModal } from './components/AddContactModal';
 
 export function App() {
-  // State for interactive inputs and form
-  const [inputValue, setInputValue] = useState('');
-  const [completedInput, setCompletedInput] = useState('Juan Pérez');
-  const [errorInput, setErrorInput] = useState('correo@invalido');
-  const [selectedValue, setSelectedValue] = useState('');
-  const [selectedOpt2, setSelectedOpt2] = useState('opt2');
-  const [chip1Active, setChip1Active] = useState(false);
-  const [chip2Active, setChip2Active] = useState(true);
-  const [chip3Active, setChip3Active] = useState(false);
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState<FilterDepartment>('Todos');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notification, setNotification] = useState<string | null>(null);
 
-  const selectOptions = [
-    { value: 'opt1', label: 'Opción 1' },
-    { value: 'opt2', label: 'Opción 2' },
-    { value: 'opt3', label: 'Opción 3' },
-  ];
+  // Load initial contacts with simulated 1-second delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setContacts(initialContactsData as Contact[]);
+      setIsLoading(false);
+    }, 1000);
 
-  // SVG Icons from Figma Design
-  const ChatIcon = () => (
-    <svg className="w-4 h-4 currentColor" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
-    </svg>
-  );
+    return () => clearTimeout(timer);
+  }, []);
 
-  const PersonIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-      />
-    </svg>
-  );
+  // Show temporary notification toast
+  const showToast = (message: string) => {
+    setNotification(message);
+    setTimeout(() => {
+      setNotification(null);
+    }, 3000);
+  };
+
+  // Handler to add a new contact
+  const handleAddContact = (newContact: Contact) => {
+    setContacts((prev) => [newContact, ...prev]);
+    showToast(`Contacto "${newContact.name}" agregado con éxito`);
+  };
+
+  // Handler to delete a contact
+  const handleDeleteContact = (id: string) => {
+    const contactToDelete = contacts.find((c) => c.id === id);
+    setContacts((prev) => prev.filter((c) => c.id !== id));
+    if (contactToDelete) {
+      showToast(`Contacto "${contactToDelete.name}" eliminado`);
+    }
+  };
+
+  // Clear filters handler
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setSelectedDepartment('Todos');
+  };
+
+  // Real-time combined filtering (Name/Email AND Department)
+  const filteredContacts = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    return contacts.filter((contact) => {
+      const matchesText =
+        query === '' ||
+        contact.name.toLowerCase().includes(query) ||
+        contact.email.toLowerCase().includes(query);
+      const matchesDept =
+        selectedDepartment === 'Todos' || contact.department === selectedDepartment;
+      return matchesText && matchesDept;
+    });
+  }, [contacts, searchQuery, selectedDepartment]);
+
+  const isFiltered = searchQuery.trim() !== '' || selectedDepartment !== 'Todos';
 
   return (
     <div className="min-h-screen bg-[#f6f5f5] text-[#48505e] font-['Segoe_UI',_sans-serif] p-4 sm:p-8 md:p-12">
-      <div className="max-w-6xl mx-auto space-y-12">
-        {/* Header */}
-        <header className="bg-white p-8 rounded-2xl shadow-sm border border-[#828d9e]/20 text-left space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#2462ec] bg-[#cbeefd] px-3 py-1 rounded-full">
-                Design System - Figma
-              </span>
-              <h1 className="text-3xl sm:text-4xl font-bold font-['Gotham',_sans-serif] text-[#1a2035] mt-2">
-                Geest - Componentes Base UI
+      {/* Toast Notification */}
+      {notification && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#1a2035] text-white px-5 py-3 rounded-xl shadow-lg border border-[#828d9e]/30 flex items-center gap-3 animate-slideUp font-['Gotham',_sans-serif] text-sm">
+          <svg className="w-5 h-5 text-[#1f9334]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+          <span>{notification}</span>
+        </div>
+      )}
+
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Top App Bar / Header */}
+        <header className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-[#828d9e]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-left">
+          <div className="space-y-1">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#2462ec] text-white flex items-center justify-center shadow-md">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold font-['Gotham',_sans-serif] text-[#1a2035]">
+                Gestor de Contactos
               </h1>
-              <p className="text-[#828d9e] text-sm sm:text-base mt-1">
-                Extracción exacta de tokens de diseño, variantes de color y componentes reutilizables desde Figma.
-              </p>
             </div>
+            <p className="text-sm text-[#828d9e] pl-0.5">
+              Administración centralizada de contactos y departamentos
+            </p>
           </div>
 
-          {/* Color Palette Swatches */}
-          <div className="pt-6 border-t border-[#f6f5f5]">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#48505e] mb-4 font-['Gotham',_sans-serif]">
-              Paleta de Colores Extraída
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
-              {/* Primary */}
-              <div className="p-3 bg-[#f6f5f5] rounded-xl text-center space-y-1">
-                <div className="h-10 w-full bg-[#2462ec] rounded-lg shadow-inner" />
-                <p className="text-xs font-bold text-[#1a2035]">Primary</p>
-                <p className="text-[11px] text-[#828d9e]">#2462ec</p>
-              </div>
-              <div className="p-3 bg-[#f6f5f5] rounded-xl text-center space-y-1">
-                <div className="h-10 w-full bg-[#cbeefd] rounded-lg border border-[#828d9e]/20" />
-                <p className="text-xs font-bold text-[#1a2035]">Primary Light</p>
-                <p className="text-[11px] text-[#828d9e]">#cbeefd</p>
-              </div>
-              {/* Alerts */}
-              <div className="p-3 bg-[#f6f5f5] rounded-xl text-center space-y-1">
-                <div className="h-10 w-full bg-[#1f9334] rounded-lg" />
-                <p className="text-xs font-bold text-[#1a2035]">Éxito</p>
-                <p className="text-[11px] text-[#828d9e]">#1f9334</p>
-              </div>
-              <div className="p-3 bg-[#f6f5f5] rounded-xl text-center space-y-1">
-                <div className="h-10 w-full bg-[#df3f46] rounded-lg" />
-                <p className="text-xs font-bold text-[#1a2035]">Error</p>
-                <p className="text-[11px] text-[#828d9e]">#df3f46</p>
-              </div>
-              <div className="p-3 bg-[#f6f5f5] rounded-xl text-center space-y-1">
-                <div className="h-10 w-full bg-[#dfd23f] rounded-lg" />
-                <p className="text-xs font-bold text-[#1a2035]">Advertencia</p>
-                <p className="text-[11px] text-[#828d9e]">#dfd23f</p>
-              </div>
-              {/* Typography / Fondo */}
-              <div className="p-3 bg-[#f6f5f5] rounded-xl text-center space-y-1">
-                <div className="h-10 w-full bg-[#1a2035] rounded-lg" />
-                <p className="text-xs font-bold text-[#1a2035]">Títulos</p>
-                <p className="text-[11px] text-[#828d9e]">#1a2035</p>
-              </div>
-            </div>
+          <div className="flex items-center gap-3 shrink-0">
+            <Button
+              variant="primary"
+              onClick={() => setIsModalOpen(true)}
+              icon={
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+                </svg>
+              }
+            >
+              Agregar Contacto
+            </Button>
           </div>
         </header>
 
-        {/* Section 1: Buttons */}
-        <section className="bg-white p-8 rounded-2xl shadow-sm border border-[#828d9e]/20 text-left space-y-6">
-          <div>
-            <h2 className="text-xl font-bold font-['Gotham',_sans-serif] text-[#1a2035]">
-              1. Botones (`Button.tsx`)
-            </h2>
-            <p className="text-sm text-[#828d9e]">
-              Variantes: Primary, Secondary, Ghost, con icono y estados hover/foco.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Primary</span>
-              <Button variant="primary">Chat</Button>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Primary + Icon</span>
-              <Button variant="primary" icon={<ChatIcon />}>
-                Chat
-              </Button>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Secondary</span>
-              <Button variant="secondary">Chat</Button>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Secondary + Icon</span>
-              <Button variant="secondary" icon={<ChatIcon />}>
-                Chat
-              </Button>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Ghost</span>
-              <Button variant="ghost" icon={<ChatIcon />}>
-                Chat
-              </Button>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Disabled</span>
-              <Button variant="primary" disabled>
-                Deshabilitado
-              </Button>
-            </div>
-          </div>
+        {/* Real-time Combined Filters */}
+        <section>
+          <ContactFilters
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            selectedDepartment={selectedDepartment}
+            onDepartmentChange={setSelectedDepartment}
+            filteredCount={filteredContacts.length}
+            totalCount={contacts.length}
+            onClearFilters={handleClearFilters}
+          />
         </section>
 
-        {/* Section 2: Inputs */}
-        <section className="bg-white p-8 rounded-2xl shadow-sm border border-[#828d9e]/20 text-left space-y-6">
-          <div>
-            <h2 className="text-xl font-bold font-['Gotham',_sans-serif] text-[#1a2035]">
-              2. Campos de Texto (`Input.tsx`)
-            </h2>
-            <p className="text-sm text-[#828d9e]">
-              Variantes del lienzos de Figma: Default, Con Icono, Completado (`#f6f5f5`), Error (`#df3f46`).
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Input Default */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Input Area (Vacío)</span>
-              <Input
-                label="Nombre completo"
-                placeholder="Escriba su nombre"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-              />
-            </div>
-
-            {/* Input con Icono */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Input Area + Icono</span>
-              <Input label="Nombre completo" icon={<PersonIcon />} placeholder="Escriba su nombre" />
-            </div>
-
-            {/* Input Complete */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Input Area Complete</span>
-              <Input
-                label="Nombre completo"
-                completed
-                value={completedInput}
-                onChange={(e) => setCompletedInput(e.target.value)}
-              />
-            </div>
-
-            {/* Input Error */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Input Area Error</span>
-              <Input
-                label="Nombre completo"
-                error="Error ..."
-                value={errorInput}
-                onChange={(e) => setErrorInput(e.target.value)}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Section 3: Select */}
-        <section className="bg-white p-8 rounded-2xl shadow-sm border border-[#828d9e]/20 text-left space-y-6">
-          <div>
-            <h2 className="text-xl font-bold font-['Gotham',_sans-serif] text-[#1a2035]">
-              3. Selectores (`Select.tsx`)
-            </h2>
-            <p className="text-sm text-[#828d9e]">
-              Estados: Default (Placeholder), Seleccionado (`#f6f5f5`), Desplegable abierto con divisores.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Select Default */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Select Default</span>
-              <Select
-                label="Selección opción"
-                placeholder="Seleccione alguno"
-                options={selectOptions}
-                value={selectedValue}
-                onChange={(val) => setSelectedValue(val)}
-              />
-            </div>
-
-            {/* Select Active / Selected */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Select Activo / Seleccionado</span>
-              <Select
-                label="Prioridad"
-                options={selectOptions}
-                value={selectedOpt2}
-                onChange={(val) => setSelectedOpt2(val)}
-              />
-            </div>
-
-            {/* Select con Error */}
-            <div>
-              <span className="text-xs text-[#828d9e] block font-semibold mb-2">Select con Error</span>
-              <Select
-                label="Categoría"
-                placeholder="Seleccione alguno"
-                error="Debe elegir una opción"
-                options={selectOptions}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Section 4: Chips */}
-        <section className="bg-white p-8 rounded-2xl shadow-sm border border-[#828d9e]/20 text-left space-y-6">
-          <div>
-            <h2 className="text-xl font-bold font-['Gotham',_sans-serif] text-[#1a2035]">
-              4. Chips (`Chip.tsx`)
-            </h2>
-            <p className="text-sm text-[#828d9e]">
-              Estados: `off` (inactivo `#f6f5f5`) y `on` (activo `#cbeefd` con icono de remover).
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Chip Off (Inactivo)</span>
-              <Chip active={false}>Sin prioridad</Chip>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Chip On (Activo con Cierre)</span>
-              <Chip active={true} onClose={() => alert('Chip cerrado')}>
-                Sin prioridad
-              </Chip>
-            </div>
-
-            <div className="space-y-1">
-              <span className="text-xs text-[#828d9e] block font-semibold">Chips Interactivos</span>
-              <div className="flex items-center gap-2">
-                <Chip active={chip1Active} onClick={() => setChip1Active(!chip1Active)}>
-                  Baja Prioridad
-                </Chip>
-                <Chip
-                  active={chip2Active}
-                  onClick={() => setChip2Active(!chip2Active)}
-                  onClose={() => setChip2Active(false)}
-                >
-                  Media Prioridad
-                </Chip>
-                <Chip active={chip3Active} onClick={() => setChip3Active(!chip3Active)}>
-                  Alta Prioridad
-                </Chip>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 5: Live Form Example */}
-        <section className="bg-gradient-to-br from-white to-[#f6f5f5] p-8 rounded-2xl shadow-sm border border-[#2462ec]/30 text-left space-y-6">
-          <div>
-            <h2 className="text-xl font-bold font-['Gotham',_sans-serif] text-[#1a2035] flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#2462ec] inline-block" />
-              Ejemplo Formulario Integrado
-            </h2>
-            <p className="text-sm text-[#828d9e]">
-              Demostración de los componentes UI trabajando en un formulario interactivo.
-            </p>
-          </div>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert('¡Formulario enviado con éxito!');
-            }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            <Input label="Nombre de Usuario" icon={<PersonIcon />} placeholder="Ej: Carlos Mendoza" required />
-            <Select
-              label="Tipo de Consulta"
-              options={[
-                { value: 'soporte', label: 'Soporte Técnico' },
-                { value: 'ventas', label: 'Ventas y Planes' },
-                { value: 'general', label: 'Información General' },
-              ]}
+        {/* Main Content Area: Skeleton Loading or Contact Grid */}
+        <main>
+          {isLoading ? (
+            <ContactSkeleton />
+          ) : (
+            <ContactList
+              contacts={filteredContacts}
+              onDeleteContact={handleDeleteContact}
+              onClearFilters={handleClearFilters}
+              onAddContact={() => setIsModalOpen(true)}
+              isFiltered={isFiltered}
             />
-
-            <div className="md:col-span-2 space-y-2">
-              <label className="font-['Gotham',_sans-serif] font-bold text-[14px] text-[#48505e] block">
-                Etiquetas / Categorías
-              </label>
-              <div className="flex flex-wrap gap-2">
-                <Chip active={true}>Urgente</Chip>
-                <Chip active={false}>Frontend</Chip>
-                <Chip active={true}>UI/UX Figma</Chip>
-              </div>
-            </div>
-
-            <div className="md:col-span-2 flex justify-end gap-3 pt-4 border-t border-[#828d9e]/20">
-              <Button variant="secondary" type="button">
-                Cancelar
-              </Button>
-              <Button variant="primary" type="submit" icon={<ChatIcon />}>
-                Enviar Mensaje
-              </Button>
-            </div>
-          </form>
-        </section>
+          )}
+        </main>
       </div>
+
+      {/* Add Contact Modal Portal */}
+      <AddContactModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAddContact={handleAddContact}
+      />
     </div>
   );
 }
 
 export default App;
-
