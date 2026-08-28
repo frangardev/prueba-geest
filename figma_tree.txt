@@ -1,0 +1,172 @@
+- [FRAME] "design system" (id: 98:5082) | Fills: #ffffff
+  - [TEXT] "Texto - normal" (id: 98:5083) | Fills: #48505e | Font: Segoe UI 400 14px | Text: "Texto - normal"
+  - [TEXT] "Texto - light" (id: 98:5084) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Texto - light"
+  - [TEXT] "Primary" (id: 98:5085) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Primary"
+  - [TEXT] "Alertas" (id: 98:5086) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Alertas"
+  - [TEXT] "Fondo" (id: 98:5087) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Fondo"
+  - [TEXT] "Texto" (id: 98:5088) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Texto"
+  - [TEXT] "Texto - bold" (id: 98:5089) | Fills: #525151 | Font: Gotham 700 16px | Text: "Texto - bold"
+  - [TEXT] "Títulos" (id: 98:5090) | Fills: #1a2035 | Font: Gotham 700 36px | Text: "Títulos"
+  - [COMPONENT_SET] "boton" (id: 8:34) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "Property 1=secondary-icon" (id: 8:33) | Fills: #ffffff | Strokes: #2462ec | Radius: 6px | Padding: t:5 r:15 b:5 l:15
+      - [INSTANCE] "icon" (id: 50:765) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: I50:765;49:623) | Fills: #2462ec
+      - [TEXT] "Chat" (id: 8:20) | Fills: #2462ec | Font: Gotham 700 14px | Text: "Chat"
+    - [COMPONENT] "Property 1=secondary" (id: 17:105) | Fills: #ffffff | Strokes: #2462ec | Radius: 6px | Padding: t:5 r:15 b:5 l:15
+      - [TEXT] "Chat" (id: 17:111) | Fills: #2462ec | Font: Gotham 700 14px | Text: "Chat"
+    - [COMPONENT] "Property 1=ghost" (id: 13:28) | Fills: #ffffff | Strokes: #0067b0 | Radius: 6px | Padding: t:5 r:15 b:5 l:15
+      - [INSTANCE] "icon" (id: 50:773) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: I50:773;49:623) | Fills: #48505e
+      - [TEXT] "Chat" (id: 13:34) | Fills: #48505e | Font: Gotham 700 14px | Text: "Chat"
+    - [COMPONENT] "Property 1=primary-icon" (id: 8:35) | Fills: #2462ec | Strokes: #2462ec | Radius: 6px | Padding: t:5 r:15 b:5 l:15
+      - [INSTANCE] "icon" (id: 50:770) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: I50:770;49:623) | Fills: #ffffff
+      - [TEXT] "Chat" (id: 8:41) | Fills: #ffffff | Font: Gotham 700 14px | Text: "Chat"
+    - [COMPONENT] "Property 1=primary" (id: 8:43) | Fills: #2462ec | Strokes: #2462ec | Radius: 6px | Padding: t:5 r:15 b:5 l:15
+      - [TEXT] "Chat" (id: 8:49) | Fills: #ffffff | Font: Gotham 700 14px | Text: "Chat"
+  - [RECTANGLE] "Rectangle 9" (id: 98:5091) | Fills: #1a2035 | Strokes: #ffffff
+  - [RECTANGLE] "Rectangle 8" (id: 98:5092) | Fills: #48505e
+  - [RECTANGLE] "Rectangle 10" (id: 98:5093) | Fills: #828d9e
+  - [RECTANGLE] "Rectangle 6" (id: 98:5094) | Fills: #ffffff | Strokes: #000000
+  - [RECTANGLE] "Rectangle 3" (id: 98:5095) | Fills: #1f9334
+  - [RECTANGLE] "Rectangle 11" (id: 98:5096) | Fills: #df3f46
+  - [RECTANGLE] "Rectangle 12" (id: 98:5097) | Fills: #dfd23f
+  - [RECTANGLE] "Rectangle 14" (id: 98:5098) | Fills: #2462ec
+  - [RECTANGLE] "Rectangle 13" (id: 98:5099) | Fills: #cbeefd
+  - [RECTANGLE] "Rectangle 5" (id: 98:5100) | Fills: #f6f5f5
+  - [COMPONENT_SET] "Form" (id: 8:101) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "Property 1=input_area" (id: 8:102)
+      - [TEXT] "Nombre completo" (id: 8:103) | Fills: #48505e | Font: Gotham 700 14px | Text: "Nombre completo"
+      - [INSTANCE] "input" (id: 8:104) | Fills: #ffffff | Strokes: #f6f5f5 | Radius: 10px | Padding: t:10 r:15 b:10 l:15
+        - [TEXT] "Escriba su nombre" (id: I8:104;971:264) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Escriba su nombre"
+    - [COMPONENT] "Property 1=input_area--icon" (id: 37:454)
+      - [FRAME] "Frame 8" (id: 37:461)
+        - [INSTANCE] "icon" (id: 80:2288) | Fills: #ffffff
+          - [VECTOR] "Vector" (id: I80:2288;80:2151) | Fills: #48505e
+          - [VECTOR] "Vector" (id: I80:2288;80:2152) | Fills: #48505e
+        - [TEXT] "Nombre completo" (id: 37:455) | Fills: #48505e | Font: Gotham 700 14px | Text: "Nombre completo"
+      - [INSTANCE] "input" (id: 37:456) | Fills: #ffffff | Strokes: #f6f5f5 | Radius: 10px | Padding: t:10 r:15 b:10 l:15
+        - [TEXT] "Escriba su nombre" (id: I37:456;971:264) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Escriba su nombre"
+    - [COMPONENT] "Property 1=input_area--icon__complete" (id: 37:462)
+      - [FRAME] "Frame 8" (id: 37:463)
+        - [INSTANCE] "icon" (id: 80:2439) | Fills: #ffffff
+          - [VECTOR] "Vector" (id: I80:2439;80:2151) | Fills: #828d9e
+          - [VECTOR] "Vector" (id: I80:2439;80:2152) | Fills: #828d9e
+        - [TEXT] "Nombre completo" (id: 37:467) | Fills: #828d9e | Font: Gotham 700 14px | Text: "Nombre completo"
+      - [INSTANCE] "input" (id: 37:468) | Fills: #f6f5f5 | Strokes: #828d9e66 | Radius: 10px | Padding: t:10 r:15 b:10 l:15
+        - [TEXT] "Escriba su nombre" (id: I37:468;971:264) | Fills: #48505e | Font: Segoe UI 400 14px | Text: "Escriba su nombre"
+    - [COMPONENT] "Property 1=input_area__complete" (id: 69:584)
+      - [FRAME] "Frame 8" (id: 69:585)
+        - [TEXT] "Nombre completo" (id: 69:589) | Fills: #828d9e | Font: Gotham 700 14px | Text: "Nombre completo"
+      - [INSTANCE] "input" (id: 69:590) | Fills: #f6f5f5 | Strokes: #828d9e66 | Radius: 10px | Padding: t:10 r:15 b:10 l:15
+        - [TEXT] "Escriba su nombre" (id: I69:590;971:264) | Fills: #48505e | Font: Segoe UI 400 14px | Text: "Escriba su nombre"
+    - [COMPONENT] "Property 1=input_area--error" (id: 8:105)
+      - [TEXT] "*Nombre completo" (id: 8:106) | Fills: #48505e | Font: Gotham 700 14px | Text: "*Nombre completo "
+      - [INSTANCE] "input" (id: 8:107) | Fills: #ffffff | Strokes: #df3f46 | Radius: 10px | Padding: t:10 r:15 b:10 l:15
+        - [TEXT] "Escriba su nombre" (id: I8:107;971:264) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Escriba su nombre"
+      - [TEXT] "Error ..." (id: 8:108) | Fills: #df3f46 | Font: Segoe UI 400 14px | Text: "Error ..."
+  - [COMPONENT_SET] "acordeon" (id: 14:78) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "status=close" (id: 14:79) | Fills: #f6f5f5 | Radius: 24px
+      - [TEXT] "Actividad" (id: 14:80) | Fills: #48505e | Font: Gotham 700 16px | Text: "Actividad"
+      - [FRAME] "bi:chevron-up" (id: 14:81) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: 37:557) | Fills: #000000
+    - [COMPONENT] "status=open" (id: 14:83) | Fills: #f6f5f5 | Radius: 24px
+      - [TEXT] "Actividad" (id: 14:84) | Fills: #48505e | Font: Gotham 700 16px | Text: "Actividad"
+      - [TEXT] "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor." (id: 14:86) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor."
+      - [RECTANGLE] "image 13" (id: 72:1139)
+      - [FRAME] "bi:chevron-up" (id: 37:558) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: 37:559) | Fills: #000000
+  - [TEXT] "Subtítulos" (id: 98:5101) | Fills: #48505e | Font: Gotham 400 22px | Text: "Subtítulos"
+  - [COMPONENT_SET] "tab" (id: 37:493) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "Property 1=on" (id: 37:491) | Fills: #ffffff | Strokes: #2462ec | Padding: t:5 r:15 b:5 l:15
+      - [INSTANCE] "icon" (id: 50:727) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: I50:727;50:708) | Fills: #48505e
+      - [TEXT] "Resumen" (id: 37:483) | Fills: #48505e | Font: Gotham 700 14px | Text: "Resumen"
+    - [COMPONENT] "Property 1=off" (id: 37:492) | Fills: #ffffff | Strokes: #2462ec | Padding: t:5 r:15 b:5 l:15
+      - [INSTANCE] "icon" (id: 50:738) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: I50:738;50:708) | Fills: #828d9e
+      - [TEXT] "Chat" (id: 37:490) | Fills: #828d9e | Font: Gotham 700 14px | Text: "Información"
+  - [COMPONENT_SET] "icon" (id: 50:726) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "Property 1=uil:save" (id: 50:709) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:621) | Fills: #000000
+    - [COMPONENT] "Property 1=uil:comment-message" (id: 50:710) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:623) | Fills: #000000
+    - [COMPONENT] "Property 1=fluent-mdl2:date-time" (id: 50:711) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:625) | Fills: #000000
+    - [COMPONENT] "Property 1=ant-design:camera-outlined" (id: 50:716) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:648) | Fills: #000000
+    - [COMPONENT] "Property 1=grommet-icons:circle-information" (id: 50:718) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:657) | Strokes: #000000
+    - [COMPONENT] "Property 1=ver-detalle" (id: 50:721) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:673) | Fills: #000000 | Strokes: #000000
+      - [VECTOR] "Vector" (id: 49:674) | Fills: #000000 | Strokes: #000000
+      - [VECTOR] "Vector" (id: 49:675) | Fills: #000000 | Strokes: #000000
+      - [VECTOR] "Vector" (id: 49:676) | Fills: #000000 | Strokes: #000000
+    - [COMPONENT] "Property 1=dashicons:arrow-right-alt2" (id: 50:719) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:669) | Fills: #000000
+    - [COMPONENT] "Property 1=cuida:sliders-outline" (id: 50:724) | Fills: #ffffff
+      - [GROUP] "Group" (id: 50:683)
+        - [GROUP] "Group" (id: 50:684)
+          - [VECTOR] "Vector" (id: 50:685) | Fills: #000000
+          - [VECTOR] "Vector" (id: 50:686) | Fills: #000000
+    - [COMPONENT] "Property 1=dashicons:arrow-down-alt2" (id: 50:720) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:671) | Fills: #000000
+    - [COMPONENT] "Property 1=boxicons:phone" (id: 50:722) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 50:681) | Fills: #000000
+    - [COMPONENT] "Property 1=akar-icons:person" (id: 50:712) | Fills: #ffffff
+      - [GROUP] "Group" (id: 49:627)
+        - [VECTOR] "Vector" (id: 49:628) | Strokes: #000000
+        - [VECTOR] "Vector" (id: 49:629) | Strokes: #000000
+    - [COMPONENT] "Property 1=ci:mail" (id: 50:713) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:631) | Strokes: #000000
+    - [COMPONENT] "Property 1=carbon:touch-1" (id: 50:714) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:633) | Fills: #000000
+      - [VECTOR] "Vector" (id: 49:634) | Fills: #000000
+    - [COMPONENT] "Property 1=mdi:currency-usd" (id: 50:715) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:638) | Fills: #000000
+    - [COMPONENT] "Property 1=carbon:flow" (id: 50:717) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 49:650) | Fills: #000000
+    - [COMPONENT] "Property 1=akar-icons:location" (id: 50:723) | Fills: #ffffff
+      - [GROUP] "Group" (id: 49:659)
+        - [VECTOR] "Vector" (id: 49:660) | Strokes: #000000
+        - [VECTOR] "Vector" (id: 49:661) | Strokes: #000000
+    - [COMPONENT] "Property 1=ph:list-checks-bold" (id: 50:725) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 50:708) | Fills: #000000
+    - [COMPONENT] "Property 1=lucide:file-input" (id: 50:968) | Fills: #ffffff
+      - [GROUP] "Group" (id: 50:965)
+        - [VECTOR] "Vector" (id: 50:966) | Strokes: #000000
+        - [VECTOR] "Vector" (id: 50:967) | Strokes: #000000
+    - [COMPONENT] "Property 1=carbon:text-small-caps" (id: 80:2154) | Fills: #ffffff
+      - [VECTOR] "Vector" (id: 80:2151) | Fills: #48505e
+      - [VECTOR] "Vector" (id: 80:2152) | Fills: #48505e
+  - [COMPONENT_SET] "chip" (id: 63:487) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "Property 1=off" (id: 63:480) | Fills: #f6f5f5 | Radius: 14px | Padding: t:5 r:10 b:5 l:10
+      - [TEXT] "Sin prioridad" (id: 63:479) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Sin prioridad"
+    - [COMPONENT] "Property 1=on" (id: 63:486) | Fills: #cbeefd | Radius: 14px | Padding: t:5 r:10 b:5 l:10
+      - [TEXT] "Sin prioridad" (id: 63:481) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Sin prioridad"
+      - [FRAME] "carbon:close" (id: 63:482) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: 63:483) | Fills: #828d9e
+  - [COMPONENT_SET] "select" (id: 80:2071) | Strokes: #8a38f5 | Radius: 5px
+    - [COMPONENT] "Property 1=defaluld" (id: 80:2066) | Fills: #ffffff | Strokes: #f6f5f5 | Radius: 10px | Padding: t:10 r:10 b:10 l:15
+      - [FRAME] "iconamoon:arrow-up-2-bold" (id: 80:2055) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: 80:2056) | Strokes: #828d9e
+      - [TEXT] "Seleccione alguno" (id: 80:2057) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Seleccione alguno"
+    - [COMPONENT] "Property 1=open" (id: 80:2069)
+      - [FRAME] "select/defaluld" (id: 80:2062) | Fills: #ffffff | Strokes: #f6f5f5 | Radius: 10px | Padding: t:10 r:10 b:10 l:15
+        - [FRAME] "iconamoon:arrow-up-2-bold" (id: 80:2063) | Fills: #ffffff
+          - [VECTOR] "Vector" (id: 80:2064) | Strokes: #828d9e
+        - [TEXT] "Seleccione alguno" (id: 80:2065) | Fills: #828d9e | Font: Segoe UI 400 14px | Text: "Seleccione alguno"
+      - [FRAME] "Select" (id: 80:2043) | Fills: #f6f5f5 | Radius: 12px
+        - [FRAME] "Frame 10" (id: 80:2044)
+          - [TEXT] "Opción 1" (id: 80:2045) | Fills: #1a2035 | Font: Segoe UI 400 14px | Text: "Opción 1"
+          - [LINE] "Line 3" (id: 80:2046) | Strokes: #828d9e
+        - [FRAME] "Frame 11" (id: 80:2047)
+          - [TEXT] "Opción 2" (id: 80:2048) | Fills: #1a2035 | Font: Segoe UI 400 14px | Text: "Opción 2"
+          - [LINE] "Line 3" (id: 80:2049) | Strokes: #828d9e
+        - [FRAME] "Frame 12" (id: 80:2050)
+          - [TEXT] "Opción 3" (id: 80:2051) | Fills: #1a2035 | Font: Segoe UI 400 14px | Text: "Opción 3"
+          - [LINE] "Line 3" (id: 80:2052) | Strokes: #828d9e
+    - [COMPONENT] "Property 1=active" (id: 80:2067) | Fills: #f6f5f5 | Strokes: #828d9e66 | Radius: 10px | Padding: t:10 r:15 b:10 l:15
+      - [FRAME] "iconamoon:arrow-up-2-bold" (id: 80:2059) | Fills: #ffffff
+        - [VECTOR] "Vector" (id: 80:2060) | Strokes: #828d9e
+      - [TEXT] "Seleccionado" (id: 80:2061) | Fills: #48505e | Font: Segoe UI 400 14px | Text: "Seleccionado"
