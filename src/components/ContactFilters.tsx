@@ -73,7 +73,7 @@ export const ContactFilters: React.FC<ContactFiltersProps> = ({
     <div className="space-y-4 text-left font-['Segoe_UI',_sans-serif]">
       {/* Search Bar Section with Label above */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">
+        <label htmlFor="search-contact-input" className="block text-sm font-semibold text-gray-700 mb-1">
           Busca el contacto por su nombre o correo
         </label>
         <div className="flex items-center gap-2 w-full">
@@ -90,7 +90,9 @@ export const ContactFilters: React.FC<ContactFiltersProps> = ({
               </svg>
             </div>
             <input
+              id="search-contact-input"
               type="text"
+              aria-label="Buscar contacto por nombre o correo"
               placeholder="Buscar contacto por nombre o email..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}

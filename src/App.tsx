@@ -1,24 +1,46 @@
-import { useState, useEffect, useMemo } from "react";
-import initialContactsData from "./data.json";
-import { Contact, FilterDepartment } from "./types";
-import { Button } from "./components/ui";
-import { ContactFilters } from "./components/ContactFilters";
-import { ContactList } from "./components/ContactList";
-import { ContactSkeleton } from "./components/ContactSkeleton";
-import { AddContactModal } from "./components/AddContactModal";
+import { useState, useEffect, useMemo } from 'react';
+import { Toaster, toast } from 'sonner';
+import initialContactsData from './data.json';
+import { Contact, FilterDepartment } from './types';
+import { Button } from './components/ui';
+
+import ConfirmDeleteModal from './components/ConfirmDeleteModal';
+import { ContactFilters } from './components/ContactFilters';
+import { ContactList } from './components/ContactList';
+import { ContactSkeleton } from './components/ContactSkeleton';
+import { AddContactModal } from './components/AddContactModal';
+
+const LOCAL_STORAGE_KEY = 'geest_contacts';
 
 export function App() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDepartment, setSelectedDepartment] =
-    useState<FilterDepartment>("Todos");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDepartment, setSelectedDepartment] = useState<FilterDepartment>('Todos');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [notification, setNotification] = useState<string | null>(null);
 
-  // Simulated 1-second initial load
+  // Delete confirmation modal state
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [contactPendingDelete, setContactPendingDelete] = useState<Contact | null>(null);
+
+  // Initial load: Read from localStorage or fallback to data.json with simulated 1-second delay
   useEffect(() => {
     const timer = setTimeout(() => {
+      try {
+        const savedContacts = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (savedContacts) {
+          const parsed = JSON.parse(savedContacts);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setContacts(parsed);
+            setIsLoading(false);
+            return;
+          }
+        }
+      } catch (error) {
+        console.error('Error al leer de localStorage:', error);
+      }
+      
+      // Fallback to data.json if localStorage is empty or invalid
       setContacts(initialContactsData as Contact[]);
       setIsLoading(false);
     }, 1000);
@@ -26,33 +48,41 @@ export function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Show temporary toast message
-  const showToast = (message: string) => {
-    setNotification(message);
-    setTimeout(() => {
-      setNotification(null);
-    }, 3000);
-  };
+  // Sync contacts array to localStorage whenever contacts state changes
+  useEffect(() => {
+    if (!isLoading) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(contacts));
+    }
+  }, [contacts, isLoading]);
 
-  // Add contact
+  // Add contact handler with floating toast notification
   const handleAddContact = (newContact: Contact) => {
     setContacts((prev) => [newContact, ...prev]);
-    showToast(`Contacto "${newContact.name}" agregado con éxito`);
+    toast.success('Contacto agregado con éxito');
   };
 
-  // Delete contact
+  // Delete contact - now opens confirmation modal
   const handleDeleteContact = (id: string) => {
-    const contactToDelete = contacts.find((c) => c.id === id);
-    setContacts((prev) => prev.filter((c) => c.id !== id));
-    if (contactToDelete) {
-      showToast(`Contacto "${contactToDelete.name}" eliminado`);
+    const contact = contacts.find((c) => c.id === id) || null;
+    setContactPendingDelete(contact);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDeleteContact = () => {
+    if (contactPendingDelete) {
+      const id = contactPendingDelete.id;
+      const name = contactPendingDelete.name;
+      setContacts((prev) => prev.filter((c) => c.id !== id));
+      toast.error(`Contacto "${name}" eliminado`);
     }
+    setDeleteModalOpen(false);
+    setContactPendingDelete(null);
   };
 
   // Clear filters
   const handleClearFilters = () => {
-    setSearchQuery("");
-    setSelectedDepartment("Todos");
+    setSearchQuery('');
+    setSelectedDepartment('Todos');
   };
 
   // Real-time combined filtering
@@ -60,40 +90,21 @@ export function App() {
     const query = searchQuery.toLowerCase().trim();
     return contacts.filter((contact) => {
       const matchesText =
-        query === "" ||
+        query === '' ||
         contact.name.toLowerCase().includes(query) ||
         contact.email.toLowerCase().includes(query);
       const matchesDept =
-        selectedDepartment === "Todos" ||
-        contact.department === selectedDepartment;
+        selectedDepartment === 'Todos' || contact.department === selectedDepartment;
       return matchesText && matchesDept;
     });
   }, [contacts, searchQuery, selectedDepartment]);
 
-  const isFiltered =
-    searchQuery.trim() !== "" || selectedDepartment !== "Todos";
+  const isFiltered = searchQuery.trim() !== '' || selectedDepartment !== 'Todos';
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-700 font-['Segoe_UI',_sans-serif]">
-      {/* Toast Notification */}
-      {notification && (
-        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-lg border border-gray-700 flex items-center gap-3 font-['Gotham',_sans-serif] text-sm animate-fadeIn">
-          <svg
-            className="w-5 h-5 text-emerald-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2.5"
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
-          <span>{notification}</span>
-        </div>
-      )}
+      {/* Sonner Floating Toast Notifications */}
+      <Toaster position="bottom-right" richColors />
 
       {/* Main Container */}
       <div className="max-w-5xl mx-auto px-4 py-12 space-y-10">
@@ -113,18 +124,8 @@ export function App() {
             onClick={() => setIsModalOpen(true)}
             className="rounded-xl shadow-xs self-start sm:self-auto"
             icon={
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2.5"
-                  d="M12 4v16m8-8H4"
-                />
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
               </svg>
             }
           >
@@ -160,6 +161,19 @@ export function App() {
           )}
         </main>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && contactPendingDelete && (
+        <ConfirmDeleteModal
+          isOpen={deleteModalOpen}
+          contact={contactPendingDelete}
+          onCancel={() => {
+            setDeleteModalOpen(false);
+            setContactPendingDelete(null);
+          }}
+          onConfirm={confirmDeleteContact}
+        />
+      )}
 
       {/* Add Contact Modal */}
       <AddContactModal

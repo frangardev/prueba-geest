@@ -6,6 +6,7 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
+  id?: string;
   label?: string;
   options: SelectOption[];
   value?: string;
@@ -17,6 +18,7 @@ export interface SelectProps {
 }
 
 export const Select: React.FC<SelectProps> = ({
+  id,
   label,
   options,
   value,
@@ -29,6 +31,7 @@ export const Select: React.FC<SelectProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const selectId = id || (label ? `select-${label.toLowerCase().replace(/\s+/g, '-')}` : undefined);
   const selectedOption = options.find((opt) => opt.value === value);
   const isSelected = !!selectedOption;
 
@@ -58,7 +61,10 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <div className="w-full flex flex-col gap-1.5 text-left font-['Segoe_UI',_sans-serif]" ref={dropdownRef}>
       {label && (
-        <label className="font-['Gotham',_system-ui,_sans-serif] font-bold text-[14px] leading-tight text-[#48505e]">
+        <label
+          htmlFor={selectId}
+          className="font-['Gotham',_system-ui,_sans-serif] font-bold text-[14px] leading-tight text-[#48505e]"
+        >
           {error && <span className="text-[#df3f46] mr-1">*</span>}
           {label}
         </label>
@@ -66,8 +72,11 @@ export const Select: React.FC<SelectProps> = ({
 
       <div className="relative w-full">
         <button
+          id={selectId}
           type="button"
           disabled={disabled}
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
           onClick={() => setIsOpen((prev) => !prev)}
           className={`w-full py-[10px] pl-[15px] pr-[12px] rounded-[10px] border text-[14px] leading-normal flex items-center justify-between transition-all duration-200 cursor-pointer outline-none focus:border-[#2462ec] focus:ring-2 focus:ring-[#2462ec]/20 disabled:bg-[#f6f5f5] disabled:opacity-60 disabled:cursor-not-allowed ${buttonStyle} ${className}`.trim()}
         >
@@ -87,11 +96,14 @@ export const Select: React.FC<SelectProps> = ({
         </button>
 
         {isOpen && !disabled && (
-          <div className="absolute bottom-full mb-1 left-0 right-0 z-50 max-h-40 overflow-y-auto shadow-xl bg-white border border-gray-200 rounded-lg py-1">
+          <div
+            role="listbox"
+            className="absolute bottom-full mb-1 left-0 right-0 z-50 max-h-40 overflow-y-auto shadow-xl bg-white border border-gray-200 rounded-lg py-1"
+          >
             {options.map((option, index) => {
               const isOptionSelected = option.value === value;
               return (
-                <div key={option.value}>
+                <div key={option.value} role="option" aria-selected={isOptionSelected}>
                   <button
                     type="button"
                     onClick={() => handleSelect(option.value)}

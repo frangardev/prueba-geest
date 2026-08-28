@@ -107,6 +107,7 @@ export const AddContactModal: React.FC<AddContactModalProps> = ({
                 {({ field }: FieldProps) => (
                   <Input
                     {...field}
+                    id="add-contact-name"
                     label="Nombre Completo"
                     placeholder="Ej: Ana María García"
                     error={touched.name && errors.name ? errors.name : undefined}
@@ -120,6 +121,7 @@ export const AddContactModal: React.FC<AddContactModalProps> = ({
                 {({ field }: FieldProps) => (
                   <Input
                     {...field}
+                    id="add-contact-email"
                     type="email"
                     label="Correo Electrónico"
                     placeholder="Ej: ana.garcia@empresa.com"
@@ -134,6 +136,7 @@ export const AddContactModal: React.FC<AddContactModalProps> = ({
                 {({ field }: FieldProps) => (
                   <Input
                     {...field}
+                    id="add-contact-phone"
                     type="tel"
                     label="Teléfono"
                     placeholder="Ej: 555-0199"
@@ -147,6 +150,7 @@ export const AddContactModal: React.FC<AddContactModalProps> = ({
               <Field name="department">
                 {({ field, form }: FieldProps) => (
                   <Select
+                    id="add-contact-department"
                     label="Departamento"
                     placeholder="Seleccione un departamento"
                     options={departmentOptions}
