@@ -59,11 +59,11 @@ export const AddContactModal: React.FC<AddContactModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-fadeIn">
       {/* Modal Container */}
       <div
-        className="bg-white w-full max-w-lg rounded-2xl shadow-xl border border-[#828d9e]/20 overflow-hidden text-left transform transition-all"
+        className="bg-white w-full max-w-lg rounded-2xl shadow-xl border border-[#828d9e]/20 relative overflow-visible text-left transform transition-all"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#f6f5f5] px-6 py-4 border-b border-[#828d9e]/20 flex items-center justify-between">
+        <div className="bg-[#f6f5f5] px-6 py-4 border-b border-[#828d9e]/20 rounded-t-2xl flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-[#2462ec]" />
             <h2 className="text-lg font-bold font-['Gotham',_sans-serif] text-[#1a2035]">
@@ -101,7 +101,7 @@ export const AddContactModal: React.FC<AddContactModalProps> = ({
           }}
         >
           {({ errors, touched, isValid, dirty, isSubmitting }) => (
-            <Form className="p-6 space-y-5">
+            <Form className="p-6 pb-6 space-y-5">
               {/* Field: Name */}
               <Field name="name">
                 {({ field }: FieldProps) => (

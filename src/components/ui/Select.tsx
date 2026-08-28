@@ -87,7 +87,7 @@ export const Select: React.FC<SelectProps> = ({
         </button>
 
         {isOpen && !disabled && (
-          <div className="absolute z-50 top-[calc(100%+6px)] left-0 w-full bg-[#f6f5f5] rounded-[12px] shadow-lg border border-[#828d9e]/20 overflow-hidden py-1">
+          <div className="absolute bottom-full mb-1 left-0 right-0 z-50 max-h-40 overflow-y-auto shadow-xl bg-white border border-gray-200 rounded-lg py-1">
             {options.map((option, index) => {
               const isOptionSelected = option.value === value;
               return (

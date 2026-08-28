@@ -1,0 +1,25 @@
+- [FRAME] "card-contact" (id: 129:2488) | Fills: #f6f5f5 | Radius: 9px | Size: 308x141
+  - [GROUP] "Group 2890" (id: 129:2489) | Size: 103x135
+    - [RECTANGLE] "Rectangle 145" (id: 129:2490) | Fills: #e6eeff | Radius: 5px | Size: 103x135
+    - [GROUP] "Group 2889" (id: 129:2491) | Size: 59x59
+      - [ELLIPSE] "Ellipse 15" (id: 129:2492) | Fills: #bcc6e7 | Size: 59x59
+      - [TEXT] "C.M." (id: 129:2493) | Fills: #5475e0 | Font: Figtree 700 18.585294723510742px | Text: "C.M." | Size: 39x19
+  - [FRAME] "cuida:trash-outline" (id: 129:2494) | Fills: #ffffff | Size: 17x17
+    - [GROUP] "Group" (id: 129:2495) | Size: 13x13
+      - [GROUP] "Group" (id: 129:2496) | Size: 13x13
+        - [VECTOR] "Vector" (id: 129:2497) | Fills: #828d9e | Size: 11x11
+        - [VECTOR] "Vector" (id: 129:2498) | Fills: #828d9e | Size: 13x8
+        - [VECTOR] "Vector" (id: 129:2499) | Fills: #828d9e | Size: 7x4
+  - [FRAME] "chip" (id: 129:2500) | Fills: #cbfde6 | Radius: 14px | Padding: t:5 r:10 b:5 l:10 | Size: 57x23
+    - [INSTANCE] "icon" (id: 129:2501) | Fills: #ffffff | Size: 9x9
+      - [VECTOR] "Vector" (id: I129:2501;50:681) | Fills: #828d9e | Size: 7x8
+    - [TEXT] "Ventas" (id: 129:2502) | Fills: #828d9e | Font: Segoe UI 400 10px | Text: "Ventas" | Size: 30x13
+  - [FRAME] "Frame 8" (id: 129:2503) | Size: 155x13
+    - [INSTANCE] "icon" (id: 129:2504) | Fills: #ffffff | Size: 13x13
+      - [VECTOR] "Vector" (id: I129:2504;49:631) | Strokes: #828d9e | Size: 10x8
+    - [TEXT] "Email: carlos@empresa.com" (id: 129:2505) | Fills: #828d9e | Font: Gotham 700 10px | Text: "Email: carlos@empresa.com" | Size: 140x12
+  - [FRAME] "Frame 9" (id: 129:2506) | Size: 109x13
+    - [INSTANCE] "icon" (id: 129:2507) | Fills: #ffffff | Size: 13x13
+      - [VECTOR] "Vector" (id: I129:2507;50:681) | Fills: #000000 | Strokes: #828d9e | Size: 11x11
+    - [TEXT] "Teléfono: 555-0101" (id: 129:2508) | Fills: #828d9e | Font: Gotham 700 10px | Text: "Teléfono: 555-0101" | Size: 94x12
+  - [TEXT] "Carlos López" (id: 129:2509) | Fills: #48505e | Font: Gotham 700 16px | Text: "Carlos López" | Size: 107x19

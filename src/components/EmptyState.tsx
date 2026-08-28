@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from './ui';
+import React from "react";
+import { Button } from "./ui";
 
 export interface EmptyStateProps {
   title?: string;
@@ -9,16 +9,21 @@ export interface EmptyStateProps {
 }
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
-  title = 'No se encontraron contactos',
-  message = 'Intenta cambiar los términos de búsqueda o los filtros por departamento seleccionados.',
+  title = "No se encontraron contactos",
+  message = "Intenta cambiar los términos de búsqueda o los filtros por departamento seleccionados.",
   onClearFilters,
   onAddContact,
 }) => {
   return (
-    <div className="bg-white rounded-2xl p-8 sm:p-12 border border-[#828d9e]/20 shadow-sm text-center flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto my-8">
+    <div className=" rounded-2xl p-8 sm:p-12 text-center flex flex-col items-center justify-center space-y-4 max-w-lg mx-auto my-2">
       {/* Icon illustration */}
-      <div className="w-16 h-16 rounded-full bg-[#cbeefd]/50 flex items-center justify-center text-[#2462ec] mb-1">
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="w-16 h-16 rounded-full flex items-center justify-center text-[#2462EC] mb-1">
+        <svg
+          className="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
